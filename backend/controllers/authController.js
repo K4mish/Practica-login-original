@@ -1,8 +1,17 @@
 import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
-import { createUser, findUserByEmail } from "../models/userModel.js";
+import { createUser, findUserByEmail, getAllUsers, updateUser, deleteUser } from "../models/userModel.js";
 dotenv.config();
+// Listar usuarios
+export async function getUsers(req, res) {
+    try {
+        const users = await getAllUsers();
+        res.json(users);
+    } catch (error) {
+        res.status(500).json({message: "Error al obtener usuarios", error: error.message});
+    }
+};
 // Controlador post register
 export const register = async(req, res) => {
     const {name, email, password} = req.body;
@@ -48,5 +57,26 @@ export const login = async(req, res) => {
         res.json({message: "Login exitoso", token, rol: user.rol});
     } catch {
         res.status(500).json({message: "Error al iniciar sesion", error: error.message});
+    }
+};
+//Editar usuario
+export async function editUser(req, res) {
+    try {
+        const {id} = req.params;
+        const {name, email, rol} = req.body;
+        await updateUser(id, name, email, rol);
+        res.json({message: "Usuario actualizado exitosamente"});
+    } catch (error) {
+        res.status(500).json({message: "Error al actualizar usuario", error: error.message});
+    }
+};
+//Eliminar usuario
+export async function removeUser(req, res) {
+    try {
+        const {id} = req.params;
+        await deleteUser(id);
+        res.json({message: "Usuario eliminado exitosamente"});
+    } catch (error) {
+        res.status(500).json({message: "Error al eliminar usuario", error: error.message});
     }
 };

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/users.css">
+    <title>Gestion de usuarios</title>
+</head>
+<body>
+    <button onclick="cerrrarSesion()">Cerrar sesíon</button>
+    <script>
+        function cerrrarSesion() {
+            // Eliminar el token del almacenamiento local
+            localStorage.removeItem('token');
+            // Redirigir al usuario a la página de inicio de sesión
+            window.location.href = '../pages/login.html';
+        }
+    </script>
+    <h1>Usuarios registrados</h1>
+    <table id="userTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Rol</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody id="userTableBody"></tbody>
+    </table>
+    <!-- Modal o ventana flotante de edicion -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <h2>Editar usuario</h2>
+            <form id="editUserForm">
+                <input type="hidden" id="editId">
+                <input type="text" id="editName" placeholder="Nombre" required>
+                <input type="email" id="editEmail" placeholder="Correo" required>
+                <select id="editRol">
+                    <option value="admin">Admin</option>
+                    <option value="cliente">Cliente</option>
+                </select>
+                <button type="submit">Guardar cambios</button>
+                <button type="button" id="closeModal">Cancelar</button>
+        </div>
+    </div>
+</body>
+</html>
