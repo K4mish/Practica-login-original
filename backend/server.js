@@ -4,13 +4,13 @@ import express from "express";
 import path from "path";
 import { fileURLToPath } from "url";
 import authRoutes from "./routes/authRoutes.js"
+import productRoutes from "./routes/productRoutes.js";
 
 dotenv.config();
 
 const app = express();
 //Obtener URL
 const __filename = fileURLToPath(import.meta.url);
-
 const __dirname = path.dirname(__filename);
 
 //middleware para habilitar cors
@@ -22,10 +22,13 @@ app.use(express.static(path.join(__dirname, "../frontend")));
 
 //rutas API
 app.use("/api", authRoutes);
+app.use("/api", productRoutes);
+
 //Ruta raiz que muestra el html de inicio
 app.get("/", (req, res) => {
     res.sendFile(path.join(__filename, "../../frontend/pages/index.html"));
 });
+
 //Iniciar servidor
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () =>{
