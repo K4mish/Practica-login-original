@@ -10,3 +10,10 @@ export const verifyToken = (req, res, next) => {
         next();
     });
 };
+export const isAdmin = (req, res, next) => {
+    if (req.user) { return res.status(401).json({message: "Usuario no autenticado"}); } // Verifica que el usuario esté autenticado
+    if (req.user.role !== 'admin') {
+        return res.status(403).json({message: "Acceso denegado se requiere rol de administrador"}); // Verifica que el usuario tenga rol de administrador
+    }
+    next();
+};

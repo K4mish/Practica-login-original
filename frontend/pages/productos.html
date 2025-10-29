@@ -7,7 +7,6 @@
   <title>Gestión de Productos</title>
 </head>
 <body>
-
   <button onclick="cerrarSesion()">Cerrar sesión</button>
 
   <script>
@@ -18,7 +17,7 @@
   </script>
 
   <h1>Gestión de Productos</h1>
-
+  <button id="Volver" onclick="location.href='../pages/admin.html'">Volver</button>
   <button id="openAddModalBtn">+ Agregar Producto</button>
 
   <table id="productTable">
@@ -35,8 +34,7 @@
     </thead>
     <tbody id="productTableBody"></tbody>
   </table>
-
-  <!-- 🟢 Modal para Agregar Producto -->
+  <!--Modal para Agregar Producto -->
   <div id="addModal" class="modal">
     <div class="modal-content">
       <h2>Agregar Producto</h2>
@@ -51,8 +49,7 @@
       </form>
     </div>
   </div>
-
-  <!-- 🟡 Modal para Editar Producto -->
+  <!--Modal para Editar Producto -->
   <div id="editModal" class="modal">
     <div class="modal-content">
       <h2>Editar Producto</h2>

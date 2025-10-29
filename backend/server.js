@@ -5,6 +5,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import authRoutes from "./routes/authRoutes.js"
 import productRoutes from "./routes/productRoutes.js";
+import ventasRoutes from "./routes/ventasRoutes.js";
 
 dotenv.config();
 
@@ -23,6 +24,7 @@ app.use(express.static(path.join(__dirname, "../frontend")));
 //rutas API
 app.use("/api", authRoutes);
 app.use("/api", productRoutes);
+app.use("/api", ventasRoutes);
 
 //Ruta raiz que muestra el html de inicio
 app.get("/", (req, res) => {
