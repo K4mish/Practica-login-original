@@ -1,6 +1,6 @@
 import { pool } from "../config/db.js";
 
-export const createSaleTransaction = async (cliemteId, items, metodoPago, creadoPor) => {
+export const createSaleTransaction = async (clienteId, items, metodoPago, creadoPor) => {
     const connection = await pool.getConnection();
     try {
         await connection.beginTransaction();
@@ -28,7 +28,7 @@ export const createSaleTransaction = async (cliemteId, items, metodoPago, creado
         // Insertar venta
         const [ventaResult] = await connection.query(
             "INSERT INTO ventas (cliente_id, total, metodo_pago, creado_por) VALUES (?, ?, ?, ?)",
-            [cliemteId, total.toFixed(2), metodoPago, creadoPor]
+            [clienteId, total.toFixed(2), metodoPago, creadoPor]
         );
         const ventaId = ventaResult.insertId;
         // Insertar detalle de venta y actualizar stock
@@ -57,7 +57,7 @@ export const createSaleTransaction = async (cliemteId, items, metodoPago, creado
     }
 };
 // Obtener resumen de ventas para el admin
-export const getSales = async () => {
+export const getAllSales = async () => {
     const [rows] = await pool.query(
         `SELECT v.id, v.cliente_id, u.name AS cliente_nombre, v.total, v.metodo_pago, v.creado_por, v.fecha, c.name as creado_por_nombre
         FROM ventas v 
@@ -66,4 +66,39 @@ export const getSales = async () => {
         ORDER BY v.fecha DESC`
     );
     return rows;
-}
+};
+// Obtener ventas de un cliente especifico
+export const getSalesByClient = async (clienteId) => {
+    const [rows] = await pool.query(
+        `SELECT v.id, v.cliente_id, v.total, v.metodo_pago, v.creado_por, v.fecha
+        FROM ventas v
+        where v.cliente_id = ?
+        ORDER BY v.fecha DESC`,
+        [clienteId]
+    );
+    return rows;
+};
+// Obtener detalle de una venta
+// Objeto con el que se obtiene la cabecera de la venta ejemplo: venta total, cliente, fecha, etc
+export const getSaleByIdModel = async (ventaId) => {
+    const [rows] = await pool.query(
+        `SELECT v.id, v.cliente_id, u.name AS cliente_nombre, v.total, v.metodo_pago, v.creado_por, v.fecha, v.metodo_pago, c.name as creado_por_nombre
+        FROM ventas v 
+        LEFT JOIN users u ON v.cliente_id = u.id
+        LEFT JOIN users c ON v.creado_por = c.id
+        whwere v.id = ?`,
+        [ventaId]
+    );
+    const venta = rows[0];
+    return venta;
+    // Objeto con el que se obtiene el detalle de la venta ejemplo: productos, cantidades, precios, etc
+    if (!venta) return null;
+    const [detalle] = await pool.query(
+        `SELECT dv.id, dv.producto_id, p.producto AS producto_nombre, dv.cantidad, dv.precio_unitario, dv.subtotal
+        FROM detalle_ventas dv
+        JOIN productos p ON dv.producto_id = p.id
+        WHERE dv.venta_id = ?`,
+        [ventaId]
+    );
+    return { ...venta, detalle };
+};
