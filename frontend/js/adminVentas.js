@@ -55,3 +55,65 @@ function renderItems() {
         });
     });
 }
+btnAdd.addEventListener("click", () => {
+    const pId = Number(productoSelect.value);
+    const product = productsCache.findIndex(p => Number(p.id) === pId);
+    const div = Math.max(1, Number(cantidadInput.value));
+    if (!product) return alert('Producto no encontrado.');
+    if (qty > product.stock) return alert('Cantidad excede el stock disponible.');
+    items.push({ product_id: pId, producto: product.producto, cantidad: div, precio_unitario: Number(product.precio_venta) });
+    renderItems();
+});
+
+btnSubmit.addEventListener("click", async () => {
+    if (items.length === 0) return alert('Agrega al menos un producto a la venta.');
+    const cliente_id = Number(clientSelect.value);
+    const metodo_pago = adminMetodo.value;
+    const payload = { cliente_id, items: items.map(i => ({
+        product_id: i.product_id, cantidad: i.cantidad
+    })), metodo_pago };
+    try {
+        const res = await fetch(`http://localhost:3000/api/ventas/admin`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+            body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.message || 'Error al registrar la venta.');
+        alert('Venta registrada ID: ' + data.venta_id);
+        items = [];
+        await loadProducts();
+        renderItems();
+        loadHistorial();
+    } catch (err) {
+        alert('Error: ' + err.message);
+    }
+});
+
+async function loadHistorial() {
+    const res = await fetch(`http://localhost:3000/api/ventas`, {headers: { 'Authorization': `Bearer ${token}` }});
+    const data = await res.json();
+    historialDiv.innerHTML = data.map(v => `
+        <div>
+            <strong>ID ${v.id}</strong> Cliente: ${v.cliente_name || v.cliente_id} - Total: $${Number(v.total).toFixed(2)} - Método: ${v.metodo_pago}
+            <button data-id="${v.id}" class="viewDetails">Ver Detalles</button>
+        </div>`
+    ).join('');
+    document.querySelectorAll(".viewDetails").forEach(b => {
+        b.addEventListener("click", async (e) => {
+            const id = e.target.dataset.id;
+            const r = await fetch(`http://localhost:3000/api/ventas/${id}`, {headers: { 'Authorization': `Bearer ${token}` }});
+            const j = await r.json();
+            if (!r.ok) { alert(j.message || "Error"); return; }
+            // Mostrar detalles
+            alert("Detalle: \\n" + j.detalle.map(d => `${d.producto_nombre} X ${d.cantidad} = $${d.subtotal}`.join('\\n')));
+        });
+    });
+}
+
+// Inicializar
+async function init() {
+    await loadUsers();
+    await loadProducts();
+    await loadHistorial();
+}
