@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <title>Admin - Registrar Venta</title>
+    <link rel="stylesheet" href="/css/user.css" />
+</head>
+<body>
+    <h1>Registrar Venta (Admin)</h1>
+
+    <label>Cliente:
+        <select id="clienteSelect"></select>
+    </label>
+
+    <label>Producto:
+        <select id="productoSelect"></select>
+    </label>
+    <label>Cantidad:
+        <input type="number" id="cantidad" value="1" min="1" />
+    </label>
+    <button id="btnAdd">Agregar</button>
+
+    <h3>Items</h3>
+    <table id="itemsTable">
+        <thead><tr><th>Producto</th><th>Cantidad</th><th>Precio unidad</th><th>Subtotal</th><th>Acciones</th></tr></thead>
+        <tbody id="itemsBody"></tbody>
+    </table>
+
+    <p>Total: $<span id="adminTotal">0.00</span></p>
+
+    <label>Metodo de pago:
+    <select id="admin_metodo_pago">
+        <option value="efectivo">Efectivo</option>
+        <option value="tarjeta">Tarjeta</option>
+    </select>
+    </label>
+
+    <button id="btnSubmit">Registrar Venta</button>
+
+    <hr/>
+    <h2>Historial de ventas (abajo)</h2>
+    <div id="historial"></div>
+
+    <script type="module" src="/js/adminVentas.js"></script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <title>Carrito</title>
+    <link rel="stylesheet" href="/css/user.css" />
+</head>
+<body>
+    <h1>Carrito de compras</h1>
+
+    <table id="cartTable">
+    <thead>
+        <tr><th>Producto</th><th>Precio</th><th>Cantidad</th><th>Subtotal</th><th>Acciones</th></tr>
+    </thead>
+    <tbody id="cartBody"></tbody>
+    </table>
+
+    <p>Total: $<span id="total">0.00</span></p>
+
+    <label>Metodo de pago:
+    <select id="metodo_pago">
+        <option value="efectivo">Efectivo</option>
+        <option value="tarjeta">Tarjeta</option>
+        <option value="transferencia">Transferencia</option>
+    </select>
+    </label>
+
+    <button id="btnCheckout">Pagar</button>
+
+    <script type="module" src="/js/carrito.js"></script>
+</body>
+</html>
