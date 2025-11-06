@@ -7,11 +7,20 @@ const editForm = document.getElementById("editForm");
 const closeAddModal = document.getElementById("closeAddModal");
 const closeEditModal = document.getElementById("closeEditModal");
 const openAddModalBtn = document.getElementById("openAddModalBtn");
+const token = localStorage.getItem("token");
+
+console.log("Token actual:", token);
+if (!token) {
+  alert("No has iniciado sesión. Por favor inicia sesión primero.");
+  throw new Error("Token no encontrado");
+}
 
 // Cargar productos
 async function loadProducts() {
   try {
-    const res = await fetch(API_URL);
+    const res = await fetch(API_URL, {
+      headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
+    });
     const products = await res.json();
 
     tableBody.innerHTML = "";
@@ -46,7 +55,10 @@ async function loadProducts() {
 // Eliminar producto
 async function deleteProduct(id) {
   if (confirm("¿Seguro que deseas eliminar este producto?")) {
-    await fetch(`${API_URL}/${id}`, { method: "DELETE" });
+    await fetch(`${API_URL}/${id}`, { 
+      method: "DELETE",
+      headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
+    });
     loadProducts();
   }
 }
@@ -86,7 +98,7 @@ addForm.addEventListener("submit", async (e) => {
   try {
     const res = await fetch(API_URL, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
       body: JSON.stringify(nuevoProducto),
     });
 
@@ -145,7 +157,7 @@ editForm.addEventListener("submit", async (e) => {
   try {
     await fetch(`${API_URL}/${id}`, {
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
       body: JSON.stringify(productoActualizado),
     });
 

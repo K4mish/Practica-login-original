@@ -3,7 +3,8 @@ const totalEl = document.getElementById("total");
 const btnCheckout = document.getElementById("btnCheckout");
 const metodoPagoEl = document.getElementById("metodo_pago");
 
-function getCart() { return JSON.parse(localStorage.getItem("cart")) || '[]'; }
+function getCart() {
+    return JSON.parse(localStorage.getItem("cart") || '[]')};
 function saveCart(c) { localStorage.setItem("cart", JSON.stringify(c)); }
 
 function render() {
@@ -11,12 +12,12 @@ function render() {
     cartBody.innerHTML = "";
     let total = 0;
     cart.forEach((item, idx) => {
-        const subtotal = Number(item.precio_unitario) * Number(item.cantidad);
+        const subtotal = Number(item.precio_venta) * Number(item.cantidad);
         total += subtotal;
         const tr = document.createElement("tr");
         tr.innerHTML = `
             <td>${item.producto}</td>
-            <td>$${Number(item.precio.venta).toFixed(2)}</td>
+            <td>$${Number(item.precio_venta).toFixed(2)}</td>
             <td><input type="number" min="1" value="${item.cantidad}" data-idx="${idx}" class="qty" style="width:64px"/></td>
             <td>$${Number(subtotal).toFixed(2)}</td>
             <td><button data-idx="${idx}" class="remove">Eliminar</button></td>
@@ -55,7 +56,7 @@ btnCheckout.addEventListener("click", async() => {
     const cart = getCart();
     if (cart.length === 0) { alert("El carrito está vacío."); return; }
     // Preparar payload de items
-    const items = cart.map(i => ({ product_id: i.id, cantidad: Number(i.cantidad) }));
+    const items = cart.map(i => ({ productId: i.id, cantidad: Number(i.cantidad) }));
     const metodo_pago = metodoPagoEl.value;
     try {
         const res = await fetch("http://localhost:3000/api/ventas", {

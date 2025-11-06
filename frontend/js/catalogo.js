@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:3000/api/productos';
+const API_URL = 'http://localhost:3000/api/products';
 const grid = document.getElementById('catalogo');
 const cartCountEl = document.getElementById('cartCount');
 

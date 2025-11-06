@@ -7,17 +7,17 @@
   <title>Gestión de Productos</title>
 </head>
 <body>
-  <button onclick="cerrarSesion()">Cerrar sesión</button>
-
-  <script>
-    function cerrarSesion() {
-      localStorage.removeItem('token');
-      window.location.href = '../pages/login.html';
-    }
-  </script>
-
-  <h1>Gestión de Productos</h1>
-  <button id="Volver" onclick="location.href='../pages/admin.html'">Volver</button>
+  <header>
+    <button id="volver" onclick="location.href='../pages/admin.html'">Volver</button>
+    <h1>Gestión de Productos</h1>
+    <button onclick="cerrarSesion()">Cerrar sesión</button>
+    <script>
+      function cerrarSesion() {
+        localStorage.removeItem('token');
+        window.location.href = '../pages/login.html';
+      }
+    </script>
+    </header>
   <button id="openAddModalBtn">+ Agregar Producto</button>
 
   <table id="productTable">

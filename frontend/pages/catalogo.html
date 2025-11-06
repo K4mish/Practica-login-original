@@ -3,65 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Catálogo de Productos</title>
-    <link rel="stylesheet" href="../css/styles.css">
-    <style>
-    body {
-        font-family: Arial, sans-serif;
-        margin: 20px;
-    }
-    header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 20px;
-    }
-    .grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-        gap: 20px;
-    }
-    .card {
-        border: 1px solid #ccc;
-        border-radius: 10px;
-        padding: 15px;
-        text-align: center;
-        box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
-    }
-    .card img {
-        width: 100%;
-        height: 150px;
-        object-fit: cover;
-        border-radius: 6px;
-    }
-    .card h3 {
-        margin: 10px 0 5px;
-    }
-    .card p {
-        font-size: 14px;
-        color: #555;
-    }
-    .card .precio {
-        font-weight: bold;
-        color: #333;
-        margin: 10px 0;
-    }
-    .card button {
-        background: #336699;
-        color: white;
-        border: none;
-        padding: 8px 12px;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-    .card button:hover {
-        background: #224466;
-    }
-    </style>
+    <link rel="stylesheet" href="../css/catalogo.css">
 </head>
 <body>
     <header>
-    <h1>Catálogo de Productos</h1>
-    <button onclick="window.location.href='carrito.html'">🛒 Ver Carrito (<span id="cartCount">0</span>)</button>
+        <button onclick="location.href='../pages/admin.html'">Volver</button>
+        <h1>Catálogo de Productos</h1>
+        <button onclick="window.location.href='carrito.html'">🛒 Ver Carrito (<span id="cartCount">0</span>)</button>
     </header>
 
     <div id="catalogo" class="grid"></div>

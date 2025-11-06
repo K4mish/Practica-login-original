@@ -1,0 +1,192 @@
+/* ======== ESTILOS GENERALES ======== */
+body {
+font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+background-color: #f4f6f8;
+margin: 0;
+padding: 0;
+color: #2f3640;
+}
+
+/* ======== ENCABEZADO ======== */
+header {
+background-color: #273c75;
+color: white;
+padding: 20px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+margin: 0;
+font-size: 1.8rem;
+letter-spacing: 1px;
+}
+
+/* ====== BOTÓN CERRAR SESIÓN ====== */
+button[onclick="cerrarSesion()"] {
+background-color: #e84118;
+color: white;
+border: none;
+padding: 8px 15px;
+border-radius: 5px;
+cursor: pointer;
+float: right;
+margin-bottom: 15px;
+transition: background 0.3s;
+}
+
+button[onclick="cerrarSesion()"]:hover {
+background-color: #c23616;
+}
+/* ====== BOTÓN VOLVER ====== */
+#volver {
+background-color: #00a8ff;
+color: white;
+border: none;
+padding: 10px 18px;
+border-radius: 5px;
+cursor: pointer;
+margin: 10px 0;
+float: left;
+transition: background 0.3s;
+}
+/* ======== TABLA DEL CARRITO ======== */
+table {
+width: 90%;
+max-width: 900px;
+margin: 20px auto;
+border-collapse: collapse;
+background-color: #fff;
+border-radius: 8px;
+overflow: hidden;
+box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+thead {
+background-color: #273c75;
+color: white;
+}
+
+th, td {
+padding: 12px 15px;
+text-align: center;
+border-bottom: 1px solid #ddd;
+}
+
+tbody tr:hover {
+background-color: #f1f2f6;
+}
+
+img {
+width: 60px;
+height: 60px;
+object-fit: cover;
+border-radius: 6px;
+}
+
+/* ======== TOTAL ======== */
+#totalContainer {
+display: flex;
+justify-content: flex-end; /* lo pone a la derecha */
+width: 90%;
+max-width: 900px;
+margin: 15px auto;
+font-size: 1.2rem;
+font-weight: bold;
+color: #192a56;
+gap: 5px; /* espacio entre "Total:" y el número */
+}
+
+#total {
+min-width: 60px;
+text-align: right;
+}
+/* ======== METODO DE PAGO ======== */
+label {
+display: block;
+width: 90%;
+max-width: 900px;
+margin: 15px auto;
+font-weight: bold;
+font-size: 1rem;
+}
+
+select {
+padding: 8px 10px;
+margin-left: 10px;
+border-radius: 5px;
+border: 1px solid #ccc;
+font-size: 1rem;
+}
+
+/* ======== BOTON PAGAR ======== */
+#btnCheckout {
+display: block;
+width: 90%;
+max-width: 900px;
+margin: 20px auto 40px;
+padding: 12px 0;
+font-size: 1.1rem;
+background-color: #44bd32;
+color: white;
+border: none;
+border-radius: 6px;
+cursor: pointer;
+transition: background 0.3s ease;
+}
+
+#btnCheckout:hover {
+background-color: #4cd137;
+}
+
+/* ======== ACCIONES EN LA TABLA ======== */
+button {
+padding: 6px 10px;
+font-size: 0.9rem;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+transition: background 0.3s ease;
+}
+
+button.edit {
+background-color: #00a8ff;
+color: white;
+}
+
+button.edit:hover {
+background-color: #0097e6;
+}
+
+button.delete {
+background-color: #e84118;
+color: white;
+}
+
+button.delete:hover {
+background-color: #c23616;
+}
+
+/* ======== RESPONSIVE ======== */
+@media (max-width: 768px) {
+th, td {
+padding: 10px 8px;
+}
+
+#total, label, #btnCheckout {
+width: 95%;
+}
+}
+
+@media (max-width: 480px) {
+table, #total, label, #btnCheckout {
+font-size: 0.9rem;
+}
+
+button {
+padding: 5px 8px;
+font-size: 0.8rem;
+}
+}

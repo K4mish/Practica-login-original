@@ -6,10 +6,21 @@ body {
   padding: 20px;
 }
 
-h1 {
-  text-align: center;
-  color: #2f3640;
-  margin-bottom: 20px;
+/* ======== ENCABEZADO ======== */
+header {
+background-color: #273c75;
+color: white;
+padding: 20px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+margin: 0;
+font-size: 1.8rem;
+letter-spacing: 1px;
 }
 
 /* ====== BOTÓN CERRAR SESIÓN ====== */
@@ -29,7 +40,7 @@ button[onclick="cerrarSesion()"]:hover {
   background-color: #c23616;
 }
 /* ====== BOTÓN VOLVER ====== */
-#Volver {
+#volver {
   background-color: #00a8ff;
   color: white;
   border: none;

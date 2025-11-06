@@ -5,12 +5,12 @@ import { isAdmin, verifyToken } from "../middleware/authMiddleware.js";
 const router = Router();
 
 // Cliente crea una venta
-router.post("/", verifyToken, createSale);
+router.post("/ventas", verifyToken, createSale);
 // Admin crea una venta para un cliente
-router.post("/admin", verifyToken, isAdmin, createSaleByAdmin);
+router.post("/ventas/admin", verifyToken, isAdmin, createSaleByAdmin);
 // Obtener ventas
-router.get("/", verifyToken, getSales);
+router.get("/ventas", verifyToken, getSales);
 // Obtener detalle de una venta
-router.get("/:id", verifyToken, isAdmin, getSaleById);
+router.get("/ventas/:id", verifyToken, isAdmin, getSaleById);
 
 export default router;
