@@ -7,16 +7,17 @@
     <title>Gestion de usuarios</title>
 </head>
 <body>
-    <button onclick="cerrrarSesion()">Cerrar sesíon</button>
-    <script>
-        function cerrrarSesion() {
-            // Eliminar el token del almacenamiento local
-            localStorage.removeItem('token');
-            // Redirigir al usuario a la página de inicio de sesión
-            window.location.href = '../pages/login.html';
-        }
-    </script>
+    <header>
+    <button id="volver" onclick="location.href='../pages/admin.html'">Volver</button>
     <h1>Usuarios registrados</h1>
+    <button onclick="cerrarSesion()">Cerrar sesión</button>
+    <script>
+      function cerrarSesion() {
+        localStorage.removeItem('token');
+        window.location.href = '../pages/login.html';
+      }
+    </script>
+    </header>
     <table id="userTable">
         <thead>
             <tr>

@@ -1,5 +1,5 @@
 const token = localStorage.getItem('token');
-if (!token) { alert('Inicia sesión.'); window.location.href = 'login.html'; };
+if (!token) { alert('Inicia sesión.'); window.location.href = '../pages/login.html'; };
 
 const API_URL = 'http://localhost:3000/api';
 const clientSelect = document.getElementById("clientSelect");
@@ -7,7 +7,7 @@ const productoSelect = document.getElementById("productoSelect");
 const cantidadInput = document.getElementById("cantidad");
 const btnAdd = document.getElementById("btnAdd");
 const itemsBody = document.getElementById("itemsBody");
-const AdminTotalEl = document.getElementById("AdminTotal");
+const AdminTotalEl = document.getElementById("adminTotal");
 const btnSubmit = document.getElementById("btnSubmit");
 const historialDiv = document.getElementById("historial");
 const adminMetodo = document.getElementById("admin_metodo_pago");
@@ -17,16 +17,33 @@ let productsCache = [];
 
 // Cargar usuarios, clientes y productos
 async function loadUsers() {
-    const res = await fetch(`http://localhost:3000/api/users`, {headers: { 'Authorization': `Bearer ${token}` }});
-    const data = await res.json();
-    clientSelect.innerHTML = data.map(u => `<option value="${u.id}">${u.name}, (${u.email})</option>`).join('');
+    try {
+        const res = await fetch(`${API_URL}/users`, {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (!res.ok) throw new Error('No se pudieron cargar los usuarios. Token inválido o sin permisos.');
+        
+        const data = await res.json();
+        clientSelect.innerHTML = data.map(u => `<option value="${u.id}">${u.name} (${u.email})</option>`).join('');
+    } catch (error) {
+        console.error('Error en loadUsers:', error);
+        alert(error.message);
+    }
 }
 // Cargar productos
 async function loadProducts() {
-    const res = await fetch(`http://localhost:3000/api/products`);
-    const data = await res.json();
-    productsCache = data;
-    productoSelect.innerHTML = data.map(p => `<option value="${p.id}" data-price="${p.precio_venta}">${p.producto} - $${Number(p.precio_venta).toFixed(2)} (Stock: ${p.stock})</option>`).join('');
+    try {
+        const res = await fetch(`${API_URL}/products`, {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (!res.ok) throw new Error('No se pudieron cargar los productos. Token inválido o sin permisos.');
+
+        const data = await res.json();
+        productoSelect.innerHTML = data.map(p => `<option value="${p.id}" data-price="${p.precio_venta}">${p.producto} - $${Number(p.precio_venta).toFixed(2)} (Stock: ${p.stock})</option>`).join('');
+    } catch (error) {
+        console.error('Error en loadProducts:', error);
+        alert(error.message);
+    }
 }
 
 function renderItems() {
@@ -60,8 +77,8 @@ btnAdd.addEventListener("click", () => {
     const product = productsCache.findIndex(p => Number(p.id) === pId);
     const div = Math.max(1, Number(cantidadInput.value));
     if (!product) return alert('Producto no encontrado.');
-    if (qty > product.stock) return alert('Cantidad excede el stock disponible.');
-    items.push({ product_id: pId, producto: product.producto, cantidad: div, precio_unitario: Number(product.precio_venta) });
+    if (div > product.stock) return alert('Cantidad excede el stock disponible.');
+    items.push({ productId: pId, producto: product.producto, cantidad: div, precio_unitario: Number(product.precio_venta) });
     renderItems();
 });
 
@@ -70,7 +87,7 @@ btnSubmit.addEventListener("click", async () => {
     const cliente_id = Number(clientSelect.value);
     const metodo_pago = adminMetodo.value;
     const payload = { cliente_id, items: items.map(i => ({
-        product_id: i.product_id, cantidad: i.cantidad
+        productId: i.productId, cantidad: i.cantidad
     })), metodo_pago };
     try {
         const res = await fetch(`http://localhost:3000/api/ventas/admin`, {
@@ -80,7 +97,7 @@ btnSubmit.addEventListener("click", async () => {
         });
         const data = await res.json();
         if (!res.ok) throw new Error(data.message || 'Error al registrar la venta.');
-        alert('Venta registrada ID: ' + data.venta_id);
+        alert('Venta registrada ID: ' + data.ventaId);
         items = [];
         await loadProducts();
         renderItems();
@@ -95,7 +112,7 @@ async function loadHistorial() {
     const data = await res.json();
     historialDiv.innerHTML = data.map(v => `
         <div>
-            <strong>ID ${v.id}</strong> Cliente: ${v.cliente_name || v.cliente_id} - Total: $${Number(v.total).toFixed(2)} - Método: ${v.metodo_pago}
+            <strong>ID ${v.id}</strong> Cliente: ${v.cliente_nombre || v.cliente_id} - Total: $${Number(v.total).toFixed(2)} - Método: ${v.metodo_pago}
             <button data-id="${v.id}" class="viewDetails">Ver Detalles</button>
         </div>`
     ).join('');
@@ -106,7 +123,8 @@ async function loadHistorial() {
             const j = await r.json();
             if (!r.ok) { alert(j.message || "Error"); return; }
             // Mostrar detalles
-            alert("Detalle: \\n" + j.detalle.map(d => `${d.producto_nombre} X ${d.cantidad} = $${d.subtotal}`.join('\\n')));
+            const detalleTexto = j.detalle.map(d => `${d.producto_nombre} X ${d.cantidad} = $${d.subtotal}`).join('\n');
+            alert("Detalle: \\n" + detalleTexto);
         });
     });
 }

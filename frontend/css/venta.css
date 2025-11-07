@@ -1,0 +1,146 @@
+/* ====== ESTILO GENERAL ====== */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f6fa;
+    margin: 0;
+    padding: 20px;
+    color: #2f3640;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #273c75;
+}
+
+/* ====== FORMULARIO PRINCIPAL ====== */
+
+label {
+    display: block;
+    margin: 10px 0;
+    font-weight: bold;
+}
+
+select,
+input[type="number"] {
+    width: 220px;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+/* ====== BOTONES ====== */
+
+button {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin: 10px 5px 20px 0;
+    background-color: #273c75;
+    color: white;
+    font-weight: bold;
+    transition: background 0.3s, transform 0.1s;
+}
+
+button:hover {
+    background-color: #192a56;
+}
+
+button:active {
+    transform: scale(0.97);
+}
+
+/* Botón Agregar item */
+#btnAdd {
+    background-color: #00a8ff;
+}
+#btnAdd:hover {
+    background-color: #0097e6;
+}
+
+/* Botón Registrar Venta */
+#btnSubmit {
+    background-color: #44bd32;
+}
+#btnSubmit:hover {
+    background-color: #3ca428;
+}
+
+/* ====== TABLA ====== */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+thead {
+    background-color: #273c75;
+    color: white;
+}
+
+th, td {
+    text-align: center;
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+}
+
+tr:hover {
+    background-color: #dcdde1;
+}
+
+/* Acciones de tabla */
+
+.action-btn {
+    padding: 6px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+    font-size: 14px;
+    margin: 0 3px;
+    transition: opacity 0.3s;
+}
+
+.action-btn:hover {
+    opacity: 0.8;
+}
+
+.edit-btn {
+    background-color: #44bd32;
+}
+
+.delete-btn {
+    background-color: #e84118;
+}
+
+/* ====== TOTAL ====== */
+
+#adminTotal {
+    font-weight: bold;
+    color: #e84118;
+    font-size: 18px;
+}
+
+/* ====== HISTORIAL ====== */
+
+h2 {
+    margin-top: 45px;
+    color: #273c75;
+}
+
+#historial {
+    margin-top: 15px;
+    background: #fff;
+    padding: 18px;
+    border-radius: 10px;
+    min-height: 80px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}

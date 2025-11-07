@@ -2,7 +2,7 @@ import { createSaleTransaction, getAllSales, getSaleByIdModel, getSalesByClient 
 
 // Cliente hace checkout
 export const createSale = async (req, res) => {
-    const clienteId = req.body.cliente_id;
+    const clienteId = req.user.id;
     const { items, metodo_pago } = req.body;
 
     if (!Array.isArray(items) || items.length === 0) {

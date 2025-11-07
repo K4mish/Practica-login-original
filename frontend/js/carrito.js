@@ -67,7 +67,7 @@ btnCheckout.addEventListener("click", async() => {
         const data = await res.json();
         if (!res.ok) throw new Error(data.message || "Error al procesar la compra");
         localStorage.removeItem("cart");
-        alert('Pago exitoso. ID de la venta: ' + data.venta_id);
+        alert('Pago exitoso. ID de la venta: ' + data.ventaId);
         window.location.href = "/pages/catalogo.html";
     } catch (err) {
         alert("Error al procesar la compra: " + err.message);

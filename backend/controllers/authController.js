@@ -55,7 +55,7 @@ export const login = async(req, res) => {
         );
         // Devolver token y rol
         res.json({message: "Login exitoso", token, rol: user.rol});
-    } catch {
+    } catch (error) {
         res.status(500).json({message: "Error al iniciar sesion", error: error.message});
     }
 };

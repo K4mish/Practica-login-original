@@ -14,7 +14,7 @@ export const createSaleTransaction = async (clienteId, items, metodoPago, creado
                 throw new Error("Datos de item invalidos");
             }
             // Bloqueamos fila mientras que la transaccion este activa con for update
-            const [rows] = await connection.query("SELECT id, precio_venta, stock FROM productos WHERE id = ? FOR UPDATE", [prodId]);
+            const [rows] = await connection.query("SELECT id, precio_venta, stock FROM products WHERE id = ? FOR UPDATE", [prodId]);
             if (rows.length === 0) {
                 throw new Error(`Producto con id ${prodId} no encontrado`);
             }
@@ -95,7 +95,7 @@ export const getSaleByIdModel = async (ventaId) => {
     const [detalle] = await pool.query(
         `SELECT dv.id, dv.producto_id, p.producto AS producto_nombre, dv.cantidad, dv.precio_unitario, dv.subtotal
         FROM detalle_ventas dv
-        JOIN productos p ON dv.producto_id = p.id
+        JOIN products p ON dv.producto_id = p.id
         WHERE dv.venta_id = ?`,
         [ventaId]
     );
