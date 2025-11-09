@@ -2,7 +2,7 @@ const token = localStorage.getItem('token');
 if (!token) { alert('Inicia sesión.'); window.location.href = '../pages/login.html'; };
 
 const API_URL = 'http://localhost:3000/api';
-const clientSelect = document.getElementById("clientSelect");
+const clienteSelect = document.getElementById("clientSelect");
 const productoSelect = document.getElementById("productoSelect");
 const cantidadInput = document.getElementById("cantidad");
 const btnAdd = document.getElementById("btnAdd");
@@ -24,7 +24,7 @@ async function loadUsers() {
         if (!res.ok) throw new Error('No se pudieron cargar los usuarios. Token inválido o sin permisos.');
         
         const data = await res.json();
-        clientSelect.innerHTML = data.map(u => `<option value="${u.id}">${u.name} (${u.email})</option>`).join('');
+        clienteSelect.innerHTML = data.map(u => `<option value="${u.id}">${u.name} (${u.email})</option>`).join('');
     } catch (error) {
         console.error('Error en loadUsers:', error);
         alert(error.message);
@@ -84,7 +84,7 @@ btnAdd.addEventListener("click", () => {
 
 btnSubmit.addEventListener("click", async () => {
     if (items.length === 0) return alert('Agrega al menos un producto a la venta.');
-    const cliente_id = Number(clientSelect.value);
+    const cliente_id = Number(clienteSelect.value);
     const metodo_pago = adminMetodo.value;
     const payload = { cliente_id, items: items.map(i => ({
         productId: i.productId, cantidad: i.cantidad
@@ -135,3 +135,4 @@ async function init() {
     await loadProducts();
     await loadHistorial();
 }
+init();
