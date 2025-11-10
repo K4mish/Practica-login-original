@@ -26,7 +26,7 @@ export const createSaleByAdmin = async (req, res) => {
     }
 
     try {
-        const ventaId = await createSaleTransaction(clienteId, items, metodo_pago || "Efectivo", clienteId);
+        const ventaId = await createSaleTransaction(cliente_id, items, metodo_pago || "Efectivo", creadoPor);
         res.status(201).json({ message: "Venta registrada por admin.", ventaId });
     } catch (error) {
         res.status(400).json({ message: "Error al crear la venta", error: error.message });
@@ -35,7 +35,7 @@ export const createSaleByAdmin = async (req, res) => {
 // Respuestas de ventas con respecto al admin
 export const getSales = async (req, res) => {
     try {
-        if (req.user.role === "admin") {
+        if (req.user.rol === "admin") {
             const ventas = await getAllSales();
             return res.json(ventas);
         }
@@ -52,7 +52,7 @@ export const getSaleById = async (req, res) => {
         const venta = await getSaleByIdModel(ventaId);
         if (!venta) return res.status(404).json({ message: "Venta no encontrada." });
         // Verificar permisos
-        if (req.user.role !== "admin" && venta.cliente_id !== req.user.id) {
+        if (req.user.rol !== "admin" && venta.cliente_id !== req.user.id) {
             return res.status(403).json({ message: "No tienes permiso para ver esta venta." });
         }
         res.json(venta);

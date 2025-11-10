@@ -39,6 +39,7 @@ async function loadProducts() {
         if (!res.ok) throw new Error('No se pudieron cargar los productos. Token inválido o sin permisos.');
 
         const data = await res.json();
+        productsCache = data;
         productoSelect.innerHTML = data.map(p => `<option value="${p.id}" data-price="${p.precio_venta}">${p.producto} - $${Number(p.precio_venta).toFixed(2)} (Stock: ${p.stock})</option>`).join('');
     } catch (error) {
         console.error('Error en loadProducts:', error);
@@ -62,7 +63,7 @@ function renderItems() {
         `;
         itemsBody.appendChild(tr);
     });
-    AdminTotalEl.textContent = `Total: $ ${Number(total).toFixed(2)}`;
+    AdminTotalEl.textContent = `$ ${Number(total).toFixed(2)}`;
     
     document.querySelectorAll(".remove").forEach(b => {
         b.addEventListener("click", (e) => {
@@ -74,7 +75,7 @@ function renderItems() {
 }
 btnAdd.addEventListener("click", () => {
     const pId = Number(productoSelect.value);
-    const product = productsCache.findIndex(p => Number(p.id) === pId);
+    const product = productsCache.find(p => Number(p.id) === pId);
     const div = Math.max(1, Number(cantidadInput.value));
     if (!product) return alert('Producto no encontrado.');
     if (div > product.stock) return alert('Cantidad excede el stock disponible.');
@@ -112,7 +113,7 @@ async function loadHistorial() {
     const data = await res.json();
     historialDiv.innerHTML = data.map(v => `
         <div>
-            <strong>ID ${v.id}</strong> Cliente: ${v.cliente_nombre || v.cliente_id} - Total: $${Number(v.total).toFixed(2)} - Método: ${v.metodo_pago}
+            <strong>ID ${v.id}</strong> Cliente: ${v.cliente_nombre || v.cliente_id} - Total: $${Number(v.total).toFixed(2)} - Método: ${v.metodo_pago} - Creado por: ${v.creado_por_nombre || v.creado_por}
             <button data-id="${v.id}" class="viewDetails">Ver Detalles</button>
         </div>`
     ).join('');

@@ -52,6 +52,11 @@ margin: 10px 0;
 float: left;
 transition: background 0.3s;
 }
+
+#volver:hover {
+background-color: #0079B3;
+}
+
 /* ======== TABLA DEL CARRITO ======== */
 table {
 width: 90%;

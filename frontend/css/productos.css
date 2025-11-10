@@ -51,6 +51,11 @@ button[onclick="cerrarSesion()"]:hover {
   float: left;
   transition: background 0.3s;
 }
+
+#volver:hover {
+background-color: #0079B3;
+}
+
 /* ====== BOTÓN AGREGAR PRODUCTO ====== */
 #openAddModalBtn {
   background-color: #00a8ff;
